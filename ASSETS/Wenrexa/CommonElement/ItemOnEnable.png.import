@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ItemOnEnable.png-4b3a57608fa74de37e76b6d886c1d989.stex"
+path="res://.import/ItemOnEnable.png-12efa29a5d7b3f9852c0a5b0c909771f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ASSETS/Wenrexa/СommonElement/ItemOnEnable.png"
-dest_files=[ "res://.import/ItemOnEnable.png-4b3a57608fa74de37e76b6d886c1d989.stex" ]
+source_file="res://ASSETS/Wenrexa/CommonElement/ItemOnEnable.png"
+dest_files=[ "res://.import/ItemOnEnable.png-12efa29a5d7b3f9852c0a5b0c909771f.stex" ]
 
 [params]
 

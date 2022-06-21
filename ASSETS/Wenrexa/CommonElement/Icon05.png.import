@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Icon05.png-4227e2aa665317e88881086f9fb5fdae.stex"
+path="res://.import/Icon05.png-a1553e777e9c8df1a37a27f69fe1e1df.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ASSETS/Wenrexa/СommonElement/Icon05.png"
-dest_files=[ "res://.import/Icon05.png-4227e2aa665317e88881086f9fb5fdae.stex" ]
+source_file="res://ASSETS/Wenrexa/CommonElement/Icon05.png"
+dest_files=[ "res://.import/Icon05.png-a1553e777e9c8df1a37a27f69fe1e1df.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
@@ -31,5 +31,5 @@ process/invert_color=false
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0
