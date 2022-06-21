@@ -1,0 +1,82 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://ASSETS/SBS_Seamless_Large/Large 1024x1024/Purple Nebula/Purple Nebula 5 - 1024x1024.png" type="Texture" id=1]
+[ext_resource path="res://SCENES/Menu/TitleScreen/TitleScreen.gd" type="Script" id=2]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://ASSETS/FontKaph/Kaph-Regular.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+size = 48
+font_data = SubResource( 1 )
+
+[node name="TitleScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Control2" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Control2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="GameTitle" type="Label" parent="Control2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -343.0
+margin_top = -42.5
+margin_right = 343.0
+margin_bottom = 42.5
+custom_fonts/font = SubResource( 2 )
+text = "THE GALACTIC GAME"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -213.0
+margin_right = 444.0
+
+[node name="VContainer" type="VBoxContainer" parent="ButtonsContainer"]
+margin_right = 444.0
+margin_bottom = 213.0
+alignment = 1
+
+[node name="Jouer" type="Button" parent="ButtonsContainer/VContainer"]
+margin_right = 444.0
+margin_bottom = 68.0
+size_flags_vertical = 3
+text = "JOUER"
+
+[node name="Journal" type="Button" parent="ButtonsContainer/VContainer"]
+margin_top = 72.0
+margin_right = 444.0
+margin_bottom = 140.0
+size_flags_vertical = 3
+text = "JOURNAL DES DECOUVERTES"
+
+[node name="Quitter" type="Button" parent="ButtonsContainer/VContainer"]
+margin_top = 144.0
+margin_right = 444.0
+margin_bottom = 213.0
+size_flags_vertical = 3
+text = "QUITTER"

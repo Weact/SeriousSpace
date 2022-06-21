@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://SCENES/Elements/SpaceElement.tscn" type="PackedScene" id=1]
+[ext_resource path="res://SCENES/Elements/Meteroid/Meteroid.gd" type="Script" id=2]
+[ext_resource path="res://ASSETS/ELEMENTS/Meteroids/Meteroids.png" type="Texture" id=3]
+[ext_resource path="res://ASSETS/ELEMENTS/Meteroids/Meteroids_rep.png" type="Texture" id=4]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 16.1245
+
+[node name="Meteroid" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+element_id = 2
+image_representation = ExtResource( 4 )
+element_scale_random_max = 3.0
+enable_custom_scale = true
+random_scale_enabled = true
+space_description = "Meteroids are HUGE really. I swear. Look at this thing how beautiful it is !"
+
+[node name="ElementSprite" type="Sprite" parent="." index="0"]
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 32, 32 )
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource( 1 )
