@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/FAST_FORWARD_LOOP_02.wav-cffd84c6fd2011dc3afca4c209bacef6.sample"
+
+[deps]
+
+source_file="res://ASSETS/ShapeformsAudio/Cassette Preview/AUDIO/FAST_FORWARD_LOOP_02.wav"
+dest_files=[ "res://.import/FAST_FORWARD_LOOP_02.wav-cffd84c6fd2011dc3afca4c209bacef6.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

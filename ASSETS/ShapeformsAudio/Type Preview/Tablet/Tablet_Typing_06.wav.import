@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Tablet_Typing_06.wav-638469ca8bab6aa1f09b9a56df0e2f16.sample"
+
+[deps]
+
+source_file="res://ASSETS/ShapeformsAudio/Type Preview/Tablet/Tablet_Typing_06.wav"
+dest_files=[ "res://.import/Tablet_Typing_06.wav-638469ca8bab6aa1f09b9a56df0e2f16.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

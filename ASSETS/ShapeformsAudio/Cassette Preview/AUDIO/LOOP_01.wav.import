@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/LOOP_01.wav-a8d6eff71453e99f52d598551416e9c0.sample"
+
+[deps]
+
+source_file="res://ASSETS/ShapeformsAudio/Cassette Preview/AUDIO/LOOP_01.wav"
+dest_files=[ "res://.import/LOOP_01.wav-a8d6eff71453e99f52d598551416e9c0.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

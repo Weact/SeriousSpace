@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/GUNMech_Empty Clip Burst B_01.wav-e69dac3a4201d39c82eb8e1e22097de6.sample"
+
+[deps]
+
+source_file="res://ASSETS/ShapeformsAudio/Sci Fi Weapons Cyberpunk Arsenal Preview/AUDIO/GUNMech_Empty Clip Burst B_01.wav"
+dest_files=[ "res://.import/GUNMech_Empty Clip Burst B_01.wav-e69dac3a4201d39c82eb8e1e22097de6.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
