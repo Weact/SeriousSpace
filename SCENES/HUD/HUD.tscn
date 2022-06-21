@@ -3,6 +3,7 @@
 [ext_resource path="res://SCENES/HUD/HUD.gd" type="Script" id=1]
 
 [node name="HUD" type="Control"]
+pause_mode = 1
 script = ExtResource( 1 )
 
 [node name="PlaceHolderContainer" type="Node" parent="."]

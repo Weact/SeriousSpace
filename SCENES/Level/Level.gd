@@ -35,6 +35,12 @@ func _ready() -> void:
 	if GAME.DEBUG:
 		print("Level is ready, game initialization is done!")
 
+func _input(event: InputEvent) -> void:
+	if not event is InputEventKey:
+		return
+	if Input.is_action_just_pressed("menu") and not get_tree().is_paused():
+		call_deferred("add_child", load(GAME.PAUSESCREEN).instance() )
+
 #### VIRTUALS ####
 
 

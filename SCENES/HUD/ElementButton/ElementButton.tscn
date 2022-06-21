@@ -11,6 +11,7 @@ size = 14
 font_data = SubResource( 1 )
 
 [node name="ElementButton" type="TextureButton"]
+pause_mode = 1
 margin_right = 40.0
 margin_bottom = 40.0
 theme = ExtResource( 2 )

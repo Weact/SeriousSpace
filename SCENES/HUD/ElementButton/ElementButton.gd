@@ -28,9 +28,9 @@ func set_pre(p: Texture) -> void:
 func set_button_disabled(d: bool) -> void:
 	disabled = d
 	if disabled:
-		set_modulate( Color(0.3, 0.3, 0.3, 1.0) )
+		set_modulate( GAME.DISABLED_ELEMENT_COLOR )
 	else:
-		set_modulate( Color(1.0, 1.0, 1.0, 1.0) )
+		set_modulate( GAME.ENABLED_ELEMENT_COLOR )
 	set_disabled(disabled)
 
 func set_descr(descr: String) -> void:
@@ -94,6 +94,7 @@ func _on_element_button_down(_button: TextureButton) -> void:
 	_create_element_placeholder()
 
 func _on_element_mouse_entered(_button: TextureButton) -> void:
+	if get_tree().is_paused(): return
 	GAME._set_cursor_in_select(true)
 	_show_information()
 
@@ -104,11 +105,11 @@ func _on_element_mouse_exited(_button: TextureButton) -> void:
 func _on_element_unlocked(element) -> void:
 	if element.get("id") != el_id: return
 	
-	var element_to_unlock : int = GAME.unlocked[ element.get("id") ]
-	var etui = GAME.get_elements()[element_to_unlock].get("id")
-	var etun = GAME.get_elements()[element_to_unlock].get("name")
+	var etui = element.get("id")
+	var etun = GAME.get_element_name_by_id(etui)
 	
-	var should_unlock_element : bool = GAME.unlocked[element_to_unlock]
+	print("Element N°" + str(etui) + " will be unlocked. Element details : [id] " + str(etui) + " | [name] " + etun + "...")
 	
-	print("Element N°" + str(element_to_unlock) + " will be unlocked. Element details : [id] " + str(etui) + " | [name] " + etun + "...")
+	var element_to_unlock_index : int = GAME.unlocked[ element.get("id") ]
+	var should_unlock_element : bool = GAME.unlocked[element_to_unlock_index]
 	set_button_disabled( not should_unlock_element )

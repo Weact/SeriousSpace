@@ -14,13 +14,19 @@ var r : bool = false
 func set_button_name(n : String) -> void:
 	el_name = n
 	set_name(el_name)
+func get_element_name() -> String:
+	return el_name
 
 func set_id(i: int) -> void:
 	el_id = i
+func get_element_id() -> int:
+	return el_id
 
 func set_pre(p: Texture) -> void:
 	el_pre = p
 	set_texture(el_pre)
+func get_element_pre() -> Texture:
+	return el_pre
 
 #### BUILT-IN ####
 
@@ -51,7 +57,7 @@ func _input(event: InputEvent) -> void:
 
 #### LOGIC ####
 
-func move():
+func move() -> void:
 	set_global_position(get_global_mouse_position())
 
 func _init_placeholder_values(e_id: int, e_name: String, e_pre: Texture) -> void:

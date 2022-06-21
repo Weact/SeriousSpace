@@ -1,11 +1,8 @@
-[gd_resource type="Theme" load_steps=12 format=2]
+[gd_resource type="Theme" load_steps=9 format=2]
 
 [ext_resource path="res://THEMES/Buttons/ButtonPressed.tres" type="StyleBox" id=1]
 [ext_resource path="res://ASSETS/FontKaph/KaphItalic_Font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://ASSETS/FontKaph/KaphRegular_Font.tres" type="DynamicFont" id=3]
-[ext_resource path="res://ASSETS/Wenrexa/CommonElement/ArrowTopBottom.png" type="Texture" id=4]
-[ext_resource path="res://ASSETS/Wenrexa/CommonElement/ItemOnDisable.png" type="Texture" id=5]
-[ext_resource path="res://ASSETS/Wenrexa/CommonElement/ItemOnEnable.png" type="Texture" id=6]
 [ext_resource path="res://THEMES/Buttons/ButtonNormal.tres" type="StyleBox" id=7]
 [ext_resource path="res://THEMES/Buttons/ButtonDisabled.tres" type="StyleBox" id=8]
 [ext_resource path="res://THEMES/Buttons/ButtonHover.tres" type="StyleBox" id=9]
@@ -52,9 +49,9 @@ CheckButton/colors/font_color_pressed = Color( 1, 1, 1, 1 )
 CheckButton/constants/check_vadjust = 0
 CheckButton/constants/hseparation = 4
 CheckButton/fonts/font = ExtResource( 3 )
-CheckButton/icons/off = ExtResource( 6 )
+CheckButton/icons/off = null
 CheckButton/icons/off_disabled = null
-CheckButton/icons/on = ExtResource( 5 )
+CheckButton/icons/on = null
 CheckButton/icons/on_disabled = null
 CheckButton/styles/disabled = ExtResource( 8 )
 CheckButton/styles/focus = SubResource( 1 )
@@ -92,7 +89,7 @@ OptionButton/colors/font_color_pressed = Color( 1, 1, 1, 1 )
 OptionButton/constants/arrow_margin = 0
 OptionButton/constants/hseparation = 0
 OptionButton/fonts/font = null
-OptionButton/icons/arrow = ExtResource( 4 )
+OptionButton/icons/arrow = null
 OptionButton/styles/disabled = null
 OptionButton/styles/focus = null
 OptionButton/styles/hover = null
