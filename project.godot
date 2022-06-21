@@ -64,6 +64,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://SCENES/Elements/Meteroid/Meteroid.gd"
 }, {
+"base": "Control",
+"class": "ObjectiveWindow",
+"language": "GDScript",
+"path": "res://SCENES/ObjectiveWindow/ObjectiveWindow.gd"
+}, {
 "base": "CanvasLayer",
 "class": "PauseScene",
 "language": "GDScript",
@@ -106,6 +111,7 @@ _global_script_class_icons={
 "JournalElement": "",
 "Level": "",
 "Meteroid": "",
+"ObjectiveWindow": "",
 "PauseScene": "",
 "PinchPanCamera": "res://addons/ppc/icon.png",
 "Planet": "",

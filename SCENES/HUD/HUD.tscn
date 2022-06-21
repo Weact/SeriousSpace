@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://SCENES/HUD/HUD.gd" type="Script" id=1]
+[ext_resource path="res://SCENES/ObjectiveWindow/ObjectiveWindow.tscn" type="PackedScene" id=2]
 
 [node name="HUD" type="Control"]
 pause_mode = 1
@@ -30,6 +31,8 @@ columns = 7
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="ObjectiveWindow" parent="." instance=ExtResource( 2 )]
 
 [connection signal="mouse_entered" from="CanvasLayer/Panel" to="." method="_on_Panel_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/Panel" to="." method="_on_Panel_mouse_exited"]

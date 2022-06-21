@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://SCENES/ObjectiveWindow/ObjectiveWindow.gd" type="Script" id=1]
+
+[node name="ObjectiveWindow" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="WindowTransition" type="Tween" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Objectives" type="Panel" parent="CanvasLayer"]
+anchor_left = 0.861875
+anchor_top = 0.0166667
+anchor_right = 0.99
+anchor_bottom = 0.983333
+margin_top = -9.53674e-07
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": true
+}
+
+[node name="HideButton" type="Button" parent="CanvasLayer/Objectives"]
+anchor_left = -0.243902
+anchor_top = 0.0201149
+anchor_right = -0.0487805
+anchor_bottom = 0.0971264
+text = ">"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/Objectives"]
+anchor_right = 1.0
+margin_bottom = 28.0
+text = "Objectifs"
+align = 1
+valign = 1
+
+[connection signal="button_down" from="CanvasLayer/Objectives/HideButton" to="." method="_on_HideButton_button_down"]
