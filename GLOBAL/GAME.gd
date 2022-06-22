@@ -728,5 +728,5 @@ func _on_current_progress_changed(objective, progress) -> void:
 
 func _on_objective_completed(objective, next_objective) -> void:
 	if objective.get("id") == 7:
-		unlock_element_by_id(6)
+		unlock_element_by_id(7)
 	update_current_objective(next_objective.get("id"))

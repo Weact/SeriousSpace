@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://SCENES/ObjectiveWindow/ObjectiveWindow.gd" type="Script" id=1]
 [ext_resource path="res://ASSETS/FontKaph/KaphSmall16.tres" type="DynamicFont" id=2]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://ASSETS/FontKaph/Kaph-Regular.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+font_data = SubResource( 1 )
 
 [node name="ObjectiveWindow" type="Control"]
 anchor_right = 1.0
@@ -16,6 +22,8 @@ __meta__ = {
 
 [node name="ObjectiveProgressTransition" type="Tween" parent="."]
 
+[node name="AchievementTransition" type="Tween" parent="."]
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Objectives" type="Panel" parent="CanvasLayer"]
@@ -25,7 +33,7 @@ anchor_right = 0.99
 anchor_bottom = 0.983333
 margin_top = -9.53674e-07
 __meta__ = {
-"_edit_lock_": true,
+"_edit_group_": true,
 "_edit_use_anchors_": true
 }
 
@@ -36,6 +44,8 @@ anchor_right = -0.0487805
 anchor_bottom = 0.0971264
 text = ">"
 __meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true,
 "_edit_use_anchors_": true
 }
 
@@ -46,12 +56,20 @@ margin_bottom = 28.0
 text = "Objectifs"
 align = 1
 valign = 1
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="ObjectivesContainer" type="VBoxContainer" parent="CanvasLayer/Objectives"]
 margin_top = 64.0
 margin_right = 205.0
 margin_bottom = 852.0
 custom_constants/separation = 50
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="ObjectiveTitle" type="Label" parent="CanvasLayer/Objectives/ObjectivesContainer"]
 margin_right = 205.0
@@ -61,6 +79,10 @@ custom_fonts/font = ExtResource( 2 )
 text = "Introduction à la Matière Noire"
 align = 1
 autowrap = true
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="ObjectiveDescription" type="Label" parent="CanvasLayer/Objectives/ObjectivesContainer"]
 margin_top = 91.0
@@ -69,6 +91,10 @@ margin_bottom = 154.0
 custom_fonts/font = ExtResource( 2 )
 text = "Placez de la matière noire dans l'espace"
 autowrap = true
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="ObjectiveProgress" type="Label" parent="CanvasLayer/Objectives/ObjectivesContainer"]
 self_modulate = Color( 0.992157, 1, 0, 1 )
@@ -79,5 +105,46 @@ custom_fonts/font = ExtResource( 2 )
 text = "PROGRESS: x/X"
 valign = 1
 autowrap = true
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="Achievements" type="Panel" parent="CanvasLayer"]
+anchor_left = 0.3475
+anchor_top = -0.328889
+anchor_right = 0.6525
+anchor_bottom = -0.0311111
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": true
+}
+
+[node name="WindowTitle" type="Label" parent="CanvasLayer/Achievements"]
+anchor_right = 1.0
+margin_bottom = 59.0
+text = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="WindowDescr" type="Label" parent="CanvasLayer/Achievements"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -190.0
+margin_bottom = -1.0
+custom_fonts/font = SubResource( 2 )
+text = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_group_": true
+}
 
 [connection signal="button_down" from="CanvasLayer/Objectives/HideButton" to="." method="_on_HideButton_button_down"]

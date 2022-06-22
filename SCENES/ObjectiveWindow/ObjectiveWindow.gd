@@ -5,6 +5,7 @@ func get_class() -> String:return "ObjectiveWindow"
 
 onready var wt : Tween = get_node("WindowTransition")
 onready var opt : Tween = get_node("ObjectiveProgressTransition")
+onready var at : Tween = get_node("AchievementTransition")
 
 onready var Objectivespanel : Panel = get_node("CanvasLayer/Objectives")
 onready var ObjectivesContainer : VBoxContainer = Objectivespanel.get_node("ObjectivesContainer")
@@ -12,10 +13,20 @@ onready var ObjectiveTitle : Label = ObjectivesContainer.get_node("ObjectiveTitl
 onready var ObjectiveDescription : Label = ObjectivesContainer.get_node("ObjectiveDescription")
 onready var ObjectiveProgress : Label = ObjectivesContainer.get_node("ObjectiveProgress")
 
+onready var Achievementpanel : Panel = get_node("CanvasLayer/Achievements")
+onready var AchievementTitle : Label = Achievementpanel.get_node("WindowTitle")
+onready var AchievementDescr : Label = Achievementpanel.get_node("WindowDescr")
+
+onready var ap_ip : Vector2 = Achievementpanel.get_global_position()
+onready var ap_fp : Vector2 = Vector2(ap_ip.x, ap_ip.y + 320)
+
 export(float) var objective_offset_x = -225.0
 
 enum STATE {CLOSE = -1, OPEN = 1}
 export(int) var ostate = STATE.OPEN
+
+enum ASTATE {CLOSE = -1, OPEN = 1}
+export(int) var astate = ASTATE.CLOSE
 
 
 #### ACCESSORS ####
@@ -72,6 +83,11 @@ func display_objective(objective_id : int) -> void:
 	ObjectiveDescription.set_text(o_d)
 	change_objective_progress(op_complete)
 
+func display_achievement(at : String, ad : String) -> void:
+	AchievementTitle.set_text(at)
+	AchievementDescr.set_text(ad)
+	play_achievement_tween()
+
 func format_op_complete(objective_id : int, objective_current_progress : Array, objective_target_progress : Array) -> String:
 	"""
 	Returns the complete formated string for the progress text
@@ -121,7 +137,34 @@ func change_objective_progress(op_complete : String) -> void:
 
 func init_objectives() -> void:
 	display_objective(0)
-	
+
+func play_achievement_tween() -> void:
+	var __
+	__ = at.interpolate_property(
+		Achievementpanel,
+		"rect_position:y",
+		ap_ip.y,
+		ap_fp.y, 2.0,
+		Tween.TRANS_SINE,
+		Tween.EASE_IN
+	)
+	at.start()
+	yield(at, "tween_completed")
+	yield(get_tree().create_timer(5.0), "timeout")
+	close_achievement_panel()
+
+func close_achievement_panel() -> void:
+	var __
+	__ = at.interpolate_property(
+		Achievementpanel,
+		"rect_position:y",
+		ap_fp.y,
+		ap_ip.y, 2.0,
+		Tween.TRANS_SINE,
+		Tween.EASE_IN
+	)
+	at.start()
+
 func play_progress_tween() -> void:
 	var __
 	__ = opt.interpolate_property(
@@ -174,8 +217,9 @@ func _on_current_progress_changed(objective_id, _progress) -> void:
 	if objective_id != GAME.current_objective: return
 	display_objective(objective_id)
 
-func _on_objective_completed(_objective, next_objective) -> void:
+func _on_objective_completed(objective, next_objective) -> void:
 	display_objective(next_objective.get("id"))
+	display_achievement(GAME.get_objective_frname_by_id(objective.get("id")), GAME.get_objective_fr_success_descr_by_id(objective.get("id")))
 
 func _on_HideButton_button_down() -> void:
 	switch_window()
