@@ -116,14 +116,14 @@ var current_objective : int = 0
 const journal_unlock_texts : Array = ["Check your journal to learn more about this element","Vous pouvez maintenant consulter votre journal de découverte pour en apprendre plus sur cet élément"]
 
 var current_progress = "_CURRENT_PROGRESS"
-var INTRO_CURRENT_PROGRESS : PoolIntArray = [0]
-var DARKMATTER_CURRENT_PROGRESS : PoolIntArray = [0]
-var COSMICDUST_CURRENT_PROGRESS : PoolIntArray = [0]
-var METEOROID_CURRENT_PROGRESS : PoolIntArray = [0]
-var PLANET_CURRENT_PROGRESS : PoolIntArray = [0]
-var STAR_CURRENT_PROGRESS : PoolIntArray = [0]
-var BLACKHOLE_CURRENT_PROGRESS : PoolIntArray = [0]
-var GALAXY_CURRENT_PROGRESS : PoolIntArray = [0, 0, 0, 0, 0, 0]
+var INTRO_CURRENT_PROGRESS : Array = [0]
+var DARKMATTER_CURRENT_PROGRESS : Array = [0]
+var COSMICDUST_CURRENT_PROGRESS : Array = [0]
+var METEOROID_CURRENT_PROGRESS : Array = [0]
+var PLANET_CURRENT_PROGRESS : Array = [0]
+var STAR_CURRENT_PROGRESS : Array = [0]
+var BLACKHOLE_CURRENT_PROGRESS : Array = [0]
+var GALAXY_CURRENT_PROGRESS : Array = [0, 0, 0, 0, 0, 0]
 
 const target_progress = "_TARGET_PROGRESS"
 const INTRO_TARGET_PROGRESS : Array = [2]
@@ -151,7 +151,7 @@ const OBJECTIVES = {
 		"description":"Place a darkmatter in space",
 		"fr_description":"Placez de la matière noire dans l'espace",
 		
-		"progress":"/2",
+		"progress":"2",
 		"finished":false,
 		
 		"success_descr":"Congratulations! You successfully placed your first element, a Dark Matter",
@@ -167,7 +167,7 @@ const OBJECTIVES = {
 		"description":"Merge two dark matters together with drag and drop",
 		"fr_description":"Rassemblez deux matières noire ensemble en les déplaçant l'un sur l'autre",
 		
-		"progress":"/1",
+		"progress":"1",
 		"finished":false,
 		
 		"success_descr":"Congratulations! You merged your first dark matters. You just got a Cosmic Dust. Try to merge more Dark Matter to be able to unlock the Cosmic Dust !",
@@ -183,7 +183,7 @@ const OBJECTIVES = {
 		"description":"Unlock Cosmic Dust by merging two Cosmic Dust together",
 		"fr_description":"Débloquez la Poussière Cosmique en rassemblant deux poussières cosmique",
 		
-		"progress":"/1",
+		"progress":"1",
 		"finished":false,
 		
 		"success_descr":"Congratulations! You merged two Cosmic Dust and Unlocked this item. You have now access to placing them directly into the space! You have completed the tutorial. Follow the objectives to continue the game or play freely",
@@ -199,7 +199,7 @@ const OBJECTIVES = {
 		"description":"Unlock Meteoroids by merging two Meteoroids",
 		"fr_description":"Débloquez les Météoroïdes en rassemblant deux météoroïdes",
 		
-		"progress":"/1",
+		"progress":"1",
 		"finished":false,
 		
 		"success_descr":"Successfully unlocked Meteoroid !",
@@ -215,7 +215,7 @@ const OBJECTIVES = {
 		"description":"Unlock Planet by merging two Planets together",
 		"fr_description":"Débloquez la Planète en rassemblant deux Planètes",
 		
-		"progress":"/1",
+		"progress":"1",
 		"finished":false,
 		
 		"success_descr":"Successfully unlocked Planet !",
@@ -231,7 +231,7 @@ const OBJECTIVES = {
 		"description":"Unlock Star by merging two Stars together",
 		"fr_description":"Débloquez l'Etoile en rassemblant deux Etoiles",
 		
-		"progress":"/1",
+		"progress":"1",
 		"finished":false,
 		
 		"success_descr":"Successfully unlocked Star !",
@@ -247,7 +247,7 @@ const OBJECTIVES = {
 		"description":"Unlock Black Hole by merging two Black Holes together",
 		"fr_description":"Débloquez un Trou Noir en rassemblant deux Trous Noir",
 		
-		"progress":"/1",
+		"progress":"1",
 		"finished":false,
 		
 		"success_descr":"Sucessfully unlocked Black Hole !",
@@ -264,12 +264,12 @@ const OBJECTIVES = {
 		"fr_description":"Débloquez la Galaxie en construisant la votre. Placez des Trous Noirs, Etoiles, Planètes et autres éléments spatiales afin de la construire !",
 		
 		"progress":{
-			"blackhole":"/1",
-			"star":"/1",
-			"planet":"/5",
-			"meteoroid":"/6",
-			"cosmicdust":"/8",
-			"darkmatter":"/17"
+			"Trou Noir":"1",
+			"Etoile":"1",
+			"Planete":"5",
+			"Meteoroide":"6",
+			"Poussiere Cosmique":"8",
+			"Matiere Noire":"17"
 		},
 		"finished":false,
 		
@@ -404,6 +404,9 @@ func get_hint_hint_by_id(id: int) -> String:
 
 ## OBJECTIVES
 
+func get_objective_by_id(id: int) -> Dictionary:
+	return OBJECTIVES[id] if (id in OBJECTIVES and OBJECTIVES[id] is Dictionary) else {}
+
 #NAME
 func get_objective_name_by_id(id: int) -> String:
 	if not id in OBJECTIVES: return ""
@@ -472,14 +475,14 @@ func finish_objective_by_id(id: int) -> void:
 			return
 
 # GET OBJECTIVE CURRENT PROGRESS
-func get_objective_current_progress_by_id(id : int) -> int:
-	if not id in OBJECTIVES: return -1
+func get_objective_current_progress_by_id(id : int) -> Array:
+	if not id in OBJECTIVES: return []
 	for o in OBJECTIVES:
 		if o == id:
-			var kn = OBJECTIVES[o].get("keyname")
-			var value : int = get(kn + current_progress)
-			return value if value > -1 else -1
-	return -1
+			var kn = OBJECTIVES[o].get("key_name")
+			var current_progress_array : Array = get(kn + current_progress)
+			return current_progress_array
+	return []
 
 # SET OBJECTIVE CURRENT PROGRESS
 func set_objective_current_progress_by_id(id: int, v: int) -> void:
@@ -497,6 +500,22 @@ func set_objective_current_progress_by_id(id: int, v: int) -> void:
 			
 			return
 
+# GET OBJECTIVE TARGET PROGRESS
+func get_objective_target_progress_by_id(id: int) -> Array:
+	if not id in OBJECTIVES: return []
+	
+	var okn : String = OBJECTIVES[id].get("key_name")
+	var complete_target_progress : String = okn + target_progress
+	
+	return get(complete_target_progress) if get(complete_target_progress) is Array else []
+
+# GET OBJECTIVE PROGRESS
+func get_objective_progress_by_id(id: int) -> String:
+	return OBJECTIVES[id].get("progress") if ( id in OBJECTIVES and OBJECTIVES[id].get("progress") is String ) else ""
+
+func get_objective_progress_dictionary_by_id(id: int) -> Dictionary:
+	return OBJECTIVES[id].get("progress") if ( id in OBJECTIVES and OBJECTIVES[id].get("progress") is Dictionary ) else {}
+
 ## PAUSED
 func set_game_paused(b: bool) -> void:
 	game_paused = b
@@ -504,9 +523,10 @@ func set_game_paused(b: bool) -> void:
 #### BUILT-IN ####
 
 func _ready() -> void:
-	connect("current_progress_changed", self, "_on_current_progress_changed")
-	connect("objective_completed", self, "_on_objective_completed")
-	
+	var __
+	__ = connect("current_progress_changed", self, "_on_current_progress_changed")
+	__ = connect("objective_completed", self, "_on_objective_completed")
+
 func _unhandled_key_input(event: InputEventKey) -> void:
 	if not DEBUG or not event.pressed or event.echo: return
 	
@@ -583,8 +603,8 @@ func spawn_random_element(origin_pos : Vector2 = Vector2.ZERO, count: int = -1, 
 
 
 #### SIGNAL RESPONSES ####
-func _on_current_progress_changed(objective, progress) -> void:
+func _on_current_progress_changed(_objective, _progress) -> void:
 	pass
 
-func _on_objective_completed(objective, next_objective) -> void:
+func _on_objective_completed(_objective, _next_objective) -> void:
 	pass
