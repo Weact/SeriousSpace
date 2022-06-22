@@ -112,6 +112,173 @@ const HINTS = {
 	}
 }
 
+var current_objective : int = 0
+const journal_unlock_texts : Array = ["Check your journal to learn more about this element","Vous pouvez maintenant consulter votre journal de découverte pour en apprendre plus sur cet élément"]
+
+var current_progress = "_CURRENT_PROGRESS"
+var INTRO_CURRENT_PROGRESS : PoolIntArray = [0]
+var DARKMATTER_CURRENT_PROGRESS : PoolIntArray = [0]
+var COSMICDUST_CURRENT_PROGRESS : PoolIntArray = [0]
+var METEOROID_CURRENT_PROGRESS : PoolIntArray = [0]
+var PLANET_CURRENT_PROGRESS : PoolIntArray = [0]
+var STAR_CURRENT_PROGRESS : PoolIntArray = [0]
+var BLACKHOLE_CURRENT_PROGRESS : PoolIntArray = [0]
+var GALAXY_CURRENT_PROGRESS : PoolIntArray = [0, 0, 0, 0, 0, 0]
+
+const target_progress = "_TARGET_PROGRESS"
+const INTRO_TARGET_PROGRESS : Array = [2]
+const DARKMATTER_TARGET_PROGRESS : Array = [1]
+const COSMICDUST_TARGET_PROGRESS : Array = [1]
+const METEOROID_TARGET_PROGRESS : Array = [1]
+const PLANET_TARGET_PROGRESS : Array = [1]
+const STAR_TARGET_PROGRESS : Array = [1]
+const BLACKHOLE_TARGET_PROGRESS : Array = [1]
+const GALAXY_TARGET_PROGRESS : Array = [1, 1, 5, 6, 8, 17]
+
+signal current_progress_changed(objective, progress)
+signal objective_completed(objective, next_objective)
+
+var objectives_finished : Array = [false, false, false, false, false, false, false, false]
+
+const OBJECTIVES = {
+	0:{
+		"id": 0,
+		"key_name":"INTRO",
+		
+		"name":"Dark Matter Intro",
+		"fr_name":"Introduction à la Matière Noire",
+		
+		"description":"Place a darkmatter in space",
+		"fr_description":"Placez de la matière noire dans l'espace",
+		
+		"progress":"/2",
+		"finished":false,
+		
+		"success_descr":"Congratulations! You successfully placed your first element, a Dark Matter",
+		"fr_success_descr":"Félicitations! Vous venez de placer votre premier élément avec succès, une Matière Noire"
+	},
+	1:{
+		"id": 1,
+		"key_name":"DARKMATTER",
+		
+		"name":"Merge Dark Matter",
+		"fr_name":"Rassemblage de Matière Noire",
+		
+		"description":"Merge two dark matters together with drag and drop",
+		"fr_description":"Rassemblez deux matières noire ensemble en les déplaçant l'un sur l'autre",
+		
+		"progress":"/1",
+		"finished":false,
+		
+		"success_descr":"Congratulations! You merged your first dark matters. You just got a Cosmic Dust. Try to merge more Dark Matter to be able to unlock the Cosmic Dust !",
+		"fr_success_descr":"Félications! Vous avez rassemblez vos premières matières noire avec succès et vous avez obtenu une Poussière Cosmique. Essayez de rassembler plus de Matière Noire afin de débloquer cette Poussière Cosmique !"
+	},
+	2:{
+		"id": 2,
+		"key_name":"COSMICDUST",
+		
+		"name":"Unlock Cosmic Dust",
+		"fr_name":"Déblocage de la Poussière Cosmique",
+		
+		"description":"Unlock Cosmic Dust by merging two Cosmic Dust together",
+		"fr_description":"Débloquez la Poussière Cosmique en rassemblant deux poussières cosmique",
+		
+		"progress":"/1",
+		"finished":false,
+		
+		"success_descr":"Congratulations! You merged two Cosmic Dust and Unlocked this item. You have now access to placing them directly into the space! You have completed the tutorial. Follow the objectives to continue the game or play freely",
+		"fr_success_descr":"Félications! Vous avez rassemblez deux Poussières Cosmiques et avez débloquer cet objet. Vous pouvez maintenant directement les placer dans l'espace! Vous avez compléter le tutoriel. Suivez le reste des objectifs afin de compléter le jeu ou jouez librement à votre manière"
+	},
+	3:{
+		"id": 3,
+		"key_name":"METEOROID",
+		
+		"name":"Unlock Meteoroids",
+		"fr_name":"Déblocage des Météoroïdes",
+		
+		"description":"Unlock Meteoroids by merging two Meteoroids",
+		"fr_description":"Débloquez les Météoroïdes en rassemblant deux météoroïdes",
+		
+		"progress":"/1",
+		"finished":false,
+		
+		"success_descr":"Successfully unlocked Meteoroid !",
+		"fr_success_descr":"Météoroïde débloqué avec succès !"
+	},
+	4:{
+		"id": 4,
+		"key_name":"PLANET",
+		
+		"name":"Unlock Planet",
+		"fr_name":"Déblocage d'une Planète",
+		
+		"description":"Unlock Planet by merging two Planets together",
+		"fr_description":"Débloquez la Planète en rassemblant deux Planètes",
+		
+		"progress":"/1",
+		"finished":false,
+		
+		"success_descr":"Successfully unlocked Planet !",
+		"fr_success_descr":"Planète débloquée avec succès !"
+	},
+	5:{
+		"id": 5,
+		"key_name":"STAR",
+		
+		"name":"Unlock Star",
+		"fr_name":"Déblocage d'Etoile",
+		
+		"description":"Unlock Star by merging two Stars together",
+		"fr_description":"Débloquez l'Etoile en rassemblant deux Etoiles",
+		
+		"progress":"/1",
+		"finished":false,
+		
+		"success_descr":"Successfully unlocked Star !",
+		"fr_success_descr":"Etoile débloquée avec succès !"
+	},
+	6:{
+		"id": 6,
+		"key_name":"BLACKHOLE",
+		
+		"name":"Unlock Black Hole",
+		"fr_name":"Déblocage d'un Trou Noir",
+		
+		"description":"Unlock Black Hole by merging two Black Holes together",
+		"fr_description":"Débloquez un Trou Noir en rassemblant deux Trous Noir",
+		
+		"progress":"/1",
+		"finished":false,
+		
+		"success_descr":"Sucessfully unlocked Black Hole !",
+		"fr_success_descr":"Trou Noir débloqué avec succès !"
+	},
+	7:{
+		"id": 7,
+		"key_name":"GALAXY",
+		
+		"name":"Unlock Galaxy and Finish The Game",
+		"fr_name":"Finir le jeu en débloquant la Galaxie",
+		
+		"description":"Unlock Galaxy by building your own. Place Black Holes, Stars, Planets and other element to build your own !",
+		"fr_description":"Débloquez la Galaxie en construisant la votre. Placez des Trous Noirs, Etoiles, Planètes et autres éléments spatiales afin de la construire !",
+		
+		"progress":{
+			"blackhole":"/1",
+			"star":"/1",
+			"planet":"/5",
+			"meteoroid":"/6",
+			"cosmicdust":"/8",
+			"darkmatter":"/17"
+		},
+		"finished":false,
+		
+		
+		"success_descr":"Congratulation ! You just finished the game. Please make sure to check your journal so that you learn about Galaxies and Galactic Center !",
+		"fr_success_descr":"Féliciations ! Vous avez fini le jeu. S'il vous plait, soyez sur de consulter votre journal de découverte afin d'en apprendre plus sur les Galaxies et les Cetntres Galactiques !"
+	}
+}
+
 var objects_container_nodes : Array = []
 
 #### ACCESSORS ####
@@ -235,6 +402,101 @@ func get_hint_hint_by_id(id: int) -> String:
 			return HINTS[h].get("hint")
 	return ""
 
+## OBJECTIVES
+
+#NAME
+func get_objective_name_by_id(id: int) -> String:
+	if not id in OBJECTIVES: return ""
+	for o in OBJECTIVES:
+		if o == id:
+			return OBJECTIVES[o].get("_name")
+	return ""
+
+#FRNAME
+func get_objective_frname_by_id(id: int) -> String:
+	if not id in OBJECTIVES: return ""
+	for o in OBJECTIVES:
+		if o == id:
+			return OBJECTIVES[o].get("fr_name")
+	return ""
+
+#DESCR
+func get_objective_descr_by_id(id: int) -> String:
+	if not id in OBJECTIVES: return ""
+	for o in OBJECTIVES:
+		if o == id:
+			return OBJECTIVES[o].get("description")
+	return ""
+
+#FRDESCR
+func get_objective_frdescr_by_id(id: int) -> String:
+	if not id in OBJECTIVES: return ""
+	for o in OBJECTIVES:
+		if o == id:
+			return OBJECTIVES[o].get("fr_description")
+	return ""
+
+#SUCCESS DESCR
+func get_objective_success_descr_by_id(id: int) -> String:
+	if not id in OBJECTIVES: return ""
+	for o in OBJECTIVES:
+		if o == id:
+			return OBJECTIVES[o].get("success_descr")
+	return ""
+
+#FR SUCCESS DESCR
+func get_objective_fr_success_descr_by_id(id: int) -> String:
+	if not id in OBJECTIVES: return ""
+	for o in OBJECTIVES:
+		if o == id:
+			return OBJECTIVES[o].get("fr_success_descr")
+	return ""
+
+# OBJECTIVE FINISHED BY ID
+func is_objective_finished_by_id(id: int) -> bool:
+	if not id in OBJECTIVES: return false
+	return objectives_finished[id]
+
+# SET OBJECTIVE FINISHED BY ID
+func finish_objective_by_id(id: int) -> void:
+	if not id in OBJECTIVES: return
+	for o in OBJECTIVES:
+		if o == id:
+			OBJECTIVES[o]["finished"] = true
+			objectives_finished[o] = OBJECTIVES[o].get("finished")
+			
+			var next_objective = OBJECTIVES[o + 1] if o < 7 else null
+			emit_signal("objective_completed", OBJECTIVES[o], next_objective)
+			
+			print( get_objective_name_by_id(o) + " has been finished ! Objectives[o]['finished']:  " + str(OBJECTIVES[o].get("finished")) + " objectives_finished[o] : " + str(objectives_finished[o]) )
+			return
+
+# GET OBJECTIVE CURRENT PROGRESS
+func get_objective_current_progress_by_id(id : int) -> int:
+	if not id in OBJECTIVES: return -1
+	for o in OBJECTIVES:
+		if o == id:
+			var kn = OBJECTIVES[o].get("keyname")
+			var value : int = get(kn + current_progress)
+			return value if value > -1 else -1
+	return -1
+
+# SET OBJECTIVE CURRENT PROGRESS
+func set_objective_current_progress_by_id(id: int, v: int) -> void:
+	if not id in OBJECTIVES: return
+	if v < 0: return
+	
+	for o in OBJECTIVES:
+		if o == id:
+			var kn = OBJECTIVES[o].get("keyname")
+			
+			if v > get(kn + target_progress): return
+			else:
+				set(kn + current_progress, v)
+				emit_signal("current_progress_changed", o, v) #o for element id, v for progress value
+			
+			return
+
 ## PAUSED
 func set_game_paused(b: bool) -> void:
 	game_paused = b
@@ -242,7 +504,8 @@ func set_game_paused(b: bool) -> void:
 #### BUILT-IN ####
 
 func _ready() -> void:
-	pass
+	connect("current_progress_changed", self, "_on_current_progress_changed")
+	connect("objective_completed", self, "_on_objective_completed")
 	
 func _unhandled_key_input(event: InputEventKey) -> void:
 	if not DEBUG or not event.pressed or event.echo: return
@@ -320,3 +583,8 @@ func spawn_random_element(origin_pos : Vector2 = Vector2.ZERO, count: int = -1, 
 
 
 #### SIGNAL RESPONSES ####
+func _on_current_progress_changed(objective, progress) -> void:
+	pass
+
+func _on_objective_completed(objective, next_objective) -> void:
+	pass

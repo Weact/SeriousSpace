@@ -16,7 +16,11 @@ export(int) var ostate = STATE.OPEN
 #### BUILT-IN ####
 
 func _ready() -> void:
-	pass
+	var __
+	__ = GAME.connect("current_progress_changed", self, "_on_current_progress_changed")
+	__ = GAME.connect("objective_completed", self, "_on_objective_completed")
+	
+	init_objectives()
 
 #### LOGIC ####
 
@@ -43,12 +47,23 @@ func switch_window() -> void:
 		)
 	wt.start()
 
+func display_objective(objective) -> void:
+	pass
+
+func init_objectives() -> void:
+	pass
+
 #### VIRTUALS ####
 
 #### INPUTS ####
 
 #### SIGNAL RESPONSES ####
 
+func _on_current_progress_changed(objective, progress) -> void:
+	pass
+
+func _on_objective_completed(objective, next_objective) -> void:
+	pass
 
 func _on_HideButton_button_down() -> void:
 	switch_window()
