@@ -124,6 +124,7 @@ var PLANET_CURRENT_PROGRESS : Array = [0]
 var STAR_CURRENT_PROGRESS : Array = [0]
 var BLACKHOLE_CURRENT_PROGRESS : Array = [0]
 var GALAXY_CURRENT_PROGRESS : Array = [0, 0, 0, 0, 0, 0]
+var END_CURRENT_PROGRESS : Array = [1]
 
 const target_progress = "_TARGET_PROGRESS"
 const INTRO_TARGET_PROGRESS : Array = [2]
@@ -134,11 +135,13 @@ const PLANET_TARGET_PROGRESS : Array = [1]
 const STAR_TARGET_PROGRESS : Array = [1]
 const BLACKHOLE_TARGET_PROGRESS : Array = [1]
 const GALAXY_TARGET_PROGRESS : Array = [1, 1, 5, 6, 8, 17]
+const END_TARGET_PROGRESS : Array = [1]
 
 signal current_progress_changed(objective, progress)
 signal objective_completed(objective, next_objective)
+signal progress_objective(objective_id)
 
-var objectives_finished : Array = [false, false, false, false, false, false, false, false]
+var objectives_finished : Array = [false, false, false, false, false, false, false, false, false]
 
 const OBJECTIVES = {
 	0:{
@@ -276,6 +279,22 @@ const OBJECTIVES = {
 		
 		"success_descr":"Congratulation ! You just finished the game. Please make sure to check your journal so that you learn about Galaxies and Galactic Center !",
 		"fr_success_descr":"Féliciations ! Vous avez fini le jeu. S'il vous plait, soyez sur de consulter votre journal de découverte afin d'en apprendre plus sur les Galaxies et les Cetntres Galactiques !"
+	},
+	8:{
+		"id": 8,
+		"key_name":"END",
+		
+		"name":"Game Finished",
+		"fr_name":"Jeu Terminé",
+		
+		"description":"You Successfully Finished The Game ! Thanks for playing and check your journal for more informations about every elements you discovered ! Also, you are now able to discover what is a Galactic Center is !",
+		"fr_description":"Vous avez fini le jeu avec succès ! Merci d'avoir jouer au jeu. N'hésitez pas à consulter votre Journal de Découverte pour vous renseigner sur les différents éléments découvert au long de votre expérience ! De plus, vous pouvez maintenant découvrir ce qu'est le Centre Galactique !",
+		
+		"progress": "1",
+		"finished": false,
+		
+		"sucess_descr":"",
+		"fr_success_descr":""
 	}
 }
 
@@ -407,12 +426,18 @@ func get_hint_hint_by_id(id: int) -> String:
 func get_objective_by_id(id: int) -> Dictionary:
 	return OBJECTIVES[id] if (id in OBJECTIVES and OBJECTIVES[id] is Dictionary) else {}
 
+func update_current_objective(objective_id: int) -> void:
+	current_objective = objective_id if objective_id in OBJECTIVES else 0
+	if current_objective <= 0:
+		push_error("Current objective has been updated to a value <= 0")
+		return
+
 #NAME
 func get_objective_name_by_id(id: int) -> String:
 	if not id in OBJECTIVES: return ""
 	for o in OBJECTIVES:
 		if o == id:
-			return OBJECTIVES[o].get("_name")
+			return OBJECTIVES[o].get("name")
 	return ""
 
 #FRNAME
@@ -463,15 +488,26 @@ func is_objective_finished_by_id(id: int) -> bool:
 # SET OBJECTIVE FINISHED BY ID
 func finish_objective_by_id(id: int) -> void:
 	if not id in OBJECTIVES: return
+	if OBJECTIVES[id]["key_name"] == "END": return
 	for o in OBJECTIVES:
 		if o == id:
 			OBJECTIVES[o]["finished"] = true
 			objectives_finished[o] = OBJECTIVES[o].get("finished")
 			
-			var next_objective = OBJECTIVES[o + 1] if o < 7 else null
+			var next_objective = OBJECTIVES[o + 1] if o < OBJECTIVES.size()-1 else null
+			
+			if next_objective == null:
+				push_warning("Trying to unlock objective with id OUT OF BOUND")
+				return
+			
 			emit_signal("objective_completed", OBJECTIVES[o], next_objective)
 			
-			print( get_objective_name_by_id(o) + " has been finished ! Objectives[o]['finished']:  " + str(OBJECTIVES[o].get("finished")) + " objectives_finished[o] : " + str(objectives_finished[o]) )
+			if DEBUG:
+				var on : String = get_objective_name_by_id(o)
+				var oofinished : String = str(OBJECTIVES[o].get("finished"))
+				var ofinisheda : String = str(objectives_finished[o])
+				print( on + " has been finished ! Objectives[o]['finished']:  " + oofinished + " objectives_finished[o] : " + ofinisheda )
+				
 			return
 
 # GET OBJECTIVE CURRENT PROGRESS
@@ -526,6 +562,7 @@ func _ready() -> void:
 	var __
 	__ = connect("current_progress_changed", self, "_on_current_progress_changed")
 	__ = connect("objective_completed", self, "_on_objective_completed")
+	__ = connect("progress_objective", self, "_on_progress_objective")
 
 func _unhandled_key_input(event: InputEventKey) -> void:
 	if not DEBUG or not event.pressed or event.echo: return
@@ -549,6 +586,10 @@ func _unhandled_key_input(event: InputEventKey) -> void:
 			print("unlocked everything")
 			for i in range(unlocked.size()):
 				unlock_element_by_id(i)
+		"ALT+F2":
+			if DEBUG:
+				print("finished objective " + get_objective_frname_by_id(current_objective) + " with id " + str(current_objective))
+			finish_objective_by_id(current_objective)
 		_:
 			return
 
@@ -606,5 +647,5 @@ func spawn_random_element(origin_pos : Vector2 = Vector2.ZERO, count: int = -1, 
 func _on_current_progress_changed(_objective, _progress) -> void:
 	pass
 
-func _on_objective_completed(_objective, _next_objective) -> void:
-	pass
+func _on_objective_completed(_objective, next_objective) -> void:
+	update_current_objective(next_objective.get("id"))

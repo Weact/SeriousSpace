@@ -159,11 +159,11 @@ func play_progress_tween() -> void:
 
 #### SIGNAL RESPONSES ####
 
-func _on_current_progress_changed(_objective, _progress) -> void:
-	play_progress_tween()
+func _on_current_progress_changed(objective, _progress) -> void:
+	display_objective(objective.get("id"))
 
-func _on_objective_completed(_objective, _next_objective) -> void:
-	pass
+func _on_objective_completed(_objective, next_objective) -> void:
+	display_objective(next_objective.get("id"))
 
 func _on_HideButton_button_down() -> void:
 	switch_window()
