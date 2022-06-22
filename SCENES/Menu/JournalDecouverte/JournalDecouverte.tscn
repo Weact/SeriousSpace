@@ -119,4 +119,13 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="LightYearHint" type="Label" parent="CanvasLayer"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = -36.0
+margin_right = 1101.0
+margin_bottom = -8.0
+text = "1 Année-Lumière = 9 461 milliards de kilomètres ou 0,3 Parsec"
+
 [connection signal="tree_exiting" from="." to="." method="_on_JournalDecouverte_tree_exiting"]
