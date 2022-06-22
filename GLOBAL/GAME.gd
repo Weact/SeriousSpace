@@ -610,6 +610,7 @@ func force_spawn_element(element_id : int, position : Vector2 = Vector2.ZERO) ->
 	var el = get_element_scene_by_id(element_id).instance()
 	el.set_global_position(get_tree().get_root().get_node("Level").get_global_mouse_position())
 	el.connect("element_dropped", MergeHandler, "_on_element_dropped")
+	el.connect("element_spawned", self, "_on_element_spawned")
 	if not position == Vector2.ZERO:
 		el.set_global_position(position)
 	objects_container_nodes[element_id].call_deferred("add_child", el, true)
@@ -644,6 +645,10 @@ func spawn_random_element(origin_pos : Vector2 = Vector2.ZERO, count: int = -1, 
 
 
 #### SIGNAL RESPONSES ####
+func _on_element_spawned(element) -> void:
+	if DEBUG:
+		print("********************************************************* FROM GAME : ELEMENT " + element.get_name() + " *********************************************************")
+
 func _on_current_progress_changed(_objective, _progress) -> void:
 	pass
 

@@ -6,6 +6,7 @@ func get_class() -> String: return "SpaceElement"
 ## SIGNALS
 signal selected_changed
 signal element_dropped(origin, target)
+signal element_spawned(elem)
 
 ## NODES
 onready var cd_sprite := get_node_or_null("ElementSprite") if get_child(0) is Sprite else get_node_or_null("AElementSprite")
@@ -153,7 +154,8 @@ func _ready() -> void:
 	__ = area.connect("area_exited", self, "_on_area_exited")
 
 	print("ELEMENT " + get_name() + " HAS SPRITE : " + str(get_child(0) is Sprite) + "; HAS ANIM SPRITE : " + str( get_child(0) is AnimatedSprite ) )
-	
+	emit_signal("element_spawned", self)
+
 func _physics_process(delta: float) -> void:
 	if selected:
 		global_position = lerp(global_position, get_global_mouse_position(), 25 * delta)

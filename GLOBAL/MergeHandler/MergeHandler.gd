@@ -125,17 +125,8 @@ func merge(el_o : RigidBody2D, el_t : RigidBody2D) -> void:
 		 + merged_element_name + " MERGED ELEMENT SCENE : " +\
 		 str(merged_element) + " MERGED ELEMENT SCENE NAME : " +\
 		 merged_element.get_state().get_node_name(0))
-	
-	var merged_element_instance = merged_element.instance()
-	
-	if GAME.DEBUG:
-		var parent_node = GAME.objects_container_nodes[merged_id].get_path()
-		print("PARENT NODE : " + parent_node)
-		merged_element_instance.set_global_position(el_o_position)
-		merged_element_instance.connect("element_dropped", self, "_on_element_dropped")
-		GAME.objects_container_nodes[merged_id].call_deferred("add_child", merged_element_instance, true)
-		yield(merged_element_instance, "ready")
-		merged_element_instance.play_appear()
+		
+	GAME.force_spawn_element(merged_id, el_o_position)
 
 #### INPUTS ####
 
