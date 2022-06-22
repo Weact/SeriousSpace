@@ -134,7 +134,7 @@ const METEOROID_TARGET_PROGRESS : Array = [1]
 const PLANET_TARGET_PROGRESS : Array = [1]
 const STAR_TARGET_PROGRESS : Array = [1]
 const BLACKHOLE_TARGET_PROGRESS : Array = [1]
-const GALAXY_TARGET_PROGRESS : Array = [1, 1, 5, 6, 8, 17]
+const GALAXY_TARGET_PROGRESS : Array = [17, 8, 6, 5, 1, 1]
 const END_TARGET_PROGRESS : Array = [1]
 
 signal current_progress_changed(objective, progress)
@@ -147,6 +147,7 @@ const OBJECTIVES = {
 	0:{
 		"id": 0,
 		"key_name":"INTRO",
+		"validation_key":"PLACE_DARKMATTER",
 		
 		"name":"Dark Matter Intro",
 		"fr_name":"Introduction à la Matière Noire",
@@ -163,6 +164,7 @@ const OBJECTIVES = {
 	1:{
 		"id": 1,
 		"key_name":"DARKMATTER",
+		"validation_key":"MERGE_DARKMATTER",
 		
 		"name":"Merge Dark Matter",
 		"fr_name":"Rassemblage de Matière Noire",
@@ -179,6 +181,7 @@ const OBJECTIVES = {
 	2:{
 		"id": 2,
 		"key_name":"COSMICDUST",
+		"validation_key":"MERGE_COSMICDUST",
 		
 		"name":"Unlock Cosmic Dust",
 		"fr_name":"Déblocage de la Poussière Cosmique",
@@ -195,6 +198,7 @@ const OBJECTIVES = {
 	3:{
 		"id": 3,
 		"key_name":"METEOROID",
+		"validation_key":"MERGE_METEROID",
 		
 		"name":"Unlock Meteoroids",
 		"fr_name":"Déblocage des Météoroïdes",
@@ -211,6 +215,7 @@ const OBJECTIVES = {
 	4:{
 		"id": 4,
 		"key_name":"PLANET",
+		"validation_key":"MERGE_PLANET",
 		
 		"name":"Unlock Planet",
 		"fr_name":"Déblocage d'une Planète",
@@ -227,6 +232,7 @@ const OBJECTIVES = {
 	5:{
 		"id": 5,
 		"key_name":"STAR",
+		"validation_key":"MERGE_STAR",
 		
 		"name":"Unlock Star",
 		"fr_name":"Déblocage d'Etoile",
@@ -243,6 +249,7 @@ const OBJECTIVES = {
 	6:{
 		"id": 6,
 		"key_name":"BLACKHOLE",
+		"validation_key":"MERGE_BLACKHOLE",
 		
 		"name":"Unlock Black Hole",
 		"fr_name":"Déblocage d'un Trou Noir",
@@ -259,6 +266,7 @@ const OBJECTIVES = {
 	7:{
 		"id": 7,
 		"key_name":"GALAXY",
+		"validation_key":"BUILD_GALAXY",
 		
 		"name":"Unlock Galaxy and Finish The Game",
 		"fr_name":"Finir le jeu en débloquant la Galaxie",
@@ -283,6 +291,7 @@ const OBJECTIVES = {
 	8:{
 		"id": 8,
 		"key_name":"END",
+		"validation_key":"END_GAME",
 		
 		"name":"Game Finished",
 		"fr_name":"Jeu Terminé",
@@ -521,20 +530,25 @@ func get_objective_current_progress_by_id(id : int) -> Array:
 	return []
 
 # SET OBJECTIVE CURRENT PROGRESS
-func set_objective_current_progress_by_id(id: int, v: int) -> void:
+func set_objective_current_progress_by_id(id: int, v) -> void:
 	if not id in OBJECTIVES: return
-	if v < 0: return
+	if v is int and v < 0: return
 	
-	for o in OBJECTIVES:
-		if o == id:
-			var kn = OBJECTIVES[o].get("keyname")
-			
-			if v > get(kn + target_progress): return
-			else:
-				set(kn + current_progress, v)
-				emit_signal("current_progress_changed", o, v) #o for element id, v for progress value
-			
-			return
+	if not v is Array:
+		for o in OBJECTIVES:
+			if o == id:
+				var kn = OBJECTIVES[o].get("key_name")
+				var kn_array = get(kn + current_progress)
+				kn_array[0] = v
+				
+				emit_signal("current_progress_changed", o, kn_array) #o for element id, v for progress value in array
+				
+				return
+	else:
+		GALAXY_CURRENT_PROGRESS = v
+		print(GALAXY_CURRENT_PROGRESS)
+		print(GALAXY_TARGET_PROGRESS)
+		emit_signal("current_progress_changed", id, GALAXY_CURRENT_PROGRESS)
 
 # GET OBJECTIVE TARGET PROGRESS
 func get_objective_target_progress_by_id(id: int) -> Array:
@@ -563,6 +577,7 @@ func _ready() -> void:
 	__ = connect("current_progress_changed", self, "_on_current_progress_changed")
 	__ = connect("objective_completed", self, "_on_objective_completed")
 	__ = connect("progress_objective", self, "_on_progress_objective")
+	__ = connect("element_unlocked", self, "_on_element_unlocked")
 
 func _unhandled_key_input(event: InputEventKey) -> void:
 	if not DEBUG or not event.pressed or event.echo: return
@@ -643,14 +658,75 @@ func spawn_random_element(origin_pos : Vector2 = Vector2.ZERO, count: int = -1, 
 #### INPUTS ####
 
 
+func check_for_objective_validation(validation_key : String = "") -> void:
+	if validation_key == OBJECTIVES[current_objective].get("validation_key"):
+		if get_objective_current_progress_by_id(current_objective) == get_objective_target_progress_by_id(current_objective):
+			finish_objective_by_id(current_objective)
+		else:
+			var a = get_objective_current_progress_by_id(current_objective)[0]
+			set_objective_current_progress_by_id(current_objective, a + 1)
+
+func check_for_galaxy_progress() -> void:
+	var ea : Array = [0, 0, 0, 0, 0, 0]
+	for c in objects_container_nodes:
+		if c is Node:
+			for e in c.get_children():
+				if e is DarkMatter:
+					ea[0] += 1
+				elif e is CosmicDust:
+					ea[1] += 1
+				elif e is Meteroid:
+					ea[2] += 1
+				elif e is Planet:
+					ea[3] += 1
+				elif e is Star:
+					ea[4] += 1
+				elif e is BlackHole:
+					ea[5] += 1
+	set_objective_current_progress_by_id(current_objective, ea)
 
 #### SIGNAL RESPONSES ####
 func _on_element_spawned(element) -> void:
-	if DEBUG:
-		print("********************************************************* FROM GAME : ELEMENT " + element.get_name() + " *********************************************************")
+	if current_objective == 7: check_for_galaxy_progress()
+	if is_objective_finished_by_id(element.get_id()) or not element.get_id() in OBJECTIVES: return
+	
+	match(element.get_class()):
+		"DarkMatter":
+			check_for_objective_validation("PLACE_DARKMATTER")
+		"CosmicDust":
+			check_for_objective_validation("MERGE_DARKMATTER")
+		"Galaxy":
+			check_for_objective_validation("BUILD_GALAXY")
 
-func _on_current_progress_changed(_objective, _progress) -> void:
-	pass
+func _on_element_unlocked(element) -> void:
+	var eid : int = element.get("id")
+	var fid : int = eid + 1
+	var is_objective_finished : bool = is_objective_finished_by_id(fid)
+	if is_objective_finished: return
+	
+	match(element.get("name")):
+		"CosmicDust":
+			check_for_objective_validation("MERGE_COSMICDUST")
+		"Meteroid":
+			check_for_objective_validation("MERGE_METEROID")
+		"Planet":
+			check_for_objective_validation("MERGE_PLANET")
+		"Star":
+			check_for_objective_validation("MERGE_STAR")
+		"BlackHole":
+			check_for_objective_validation("MERGE_BLACKHOLE")
+		"Galaxy":
+			check_for_objective_validation("BUILD_GALAXY")
 
-func _on_objective_completed(_objective, next_objective) -> void:
+func _on_current_progress_changed(objective, progress) -> void:
+	var c = get_objective_current_progress_by_id(objective)
+	var t = get_objective_target_progress_by_id(objective)
+	
+	var e = get_objective_current_progress_by_id(objective) > get_objective_target_progress_by_id(objective)
+	if c == t or e:
+		finish_objective_by_id(objective)
+
+func _on_objective_completed(objective, next_objective) -> void:
+	if objective.get("id") == 7:
+		unlock_element_by_id(6)
 	update_current_objective(next_objective.get("id"))

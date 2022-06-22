@@ -110,6 +110,6 @@ func _on_element_unlocked(element) -> void:
 	
 	print("Element N°" + str(etui) + " will be unlocked. Element details : [id] " + str(etui) + " | [name] " + etun + "...")
 	
-	var element_to_unlock_index : int = GAME.unlocked[ element.get("id") ]
+	var element_to_unlock_index : int = GAME.unlocked[ etui ]
 	var should_unlock_element : bool = GAME.unlocked[element_to_unlock_index]
 	set_button_disabled( not should_unlock_element )

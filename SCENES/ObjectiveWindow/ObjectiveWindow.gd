@@ -80,28 +80,39 @@ func format_op_complete(objective_id : int, objective_current_progress : Array, 
 	According to the size, the returned string will be different
 	"""
 	var objective_progress : Dictionary = GAME.get_objective_progress_dictionary_by_id(objective_id)
-	
+		
 	var op_head : String = "PROGRESS :\n"
 	var op_body : String = ""
+	var op_complete = ""
 	
-	var op_complete : String = ""
-	
-	if objective_target_progress.size() == 1:
-		op_body = str( objective_current_progress[0] ) + "/" + str( objective_target_progress[0] )
+	if objective_id == 7:
+		var t_dm : String = "Matière Noire " + str(GAME.GALAXY_CURRENT_PROGRESS[0]) + "/" + str(GAME.GALAXY_TARGET_PROGRESS[0]) + "\n"
+		var t_cd : String = "Poussière Cosmique " + str(GAME.GALAXY_CURRENT_PROGRESS[1]) + "/" + str(GAME.GALAXY_TARGET_PROGRESS[1]) + "\n"
+		var t_m : String = "Météoroïde " + str(GAME.GALAXY_CURRENT_PROGRESS[2]) + "/" + str(GAME.GALAXY_TARGET_PROGRESS[2]) + "\n"
+		var t_p : String = "Planète " + str(GAME.GALAXY_CURRENT_PROGRESS[3]) + "/" + str(GAME.GALAXY_TARGET_PROGRESS[3]) + "\n"
+		var t_s : String = "Etoile " + str(GAME.GALAXY_CURRENT_PROGRESS[4]) + "/" + str(GAME.GALAXY_TARGET_PROGRESS[4]) + "\n"
+		var t_bh : String = "Trou Noir " + str(GAME.GALAXY_CURRENT_PROGRESS[5]) + "/" + str(GAME.GALAXY_TARGET_PROGRESS[5]) + "\n"
+		
+		op_body = op_body + t_dm + t_cd + t_m + t_p + t_s + t_bh
+		op_complete = op_head + op_body
 	else:
-		if objective_progress == {}:
-			push_error("Target objective progress with id " + str(objective_id) + " with name " + GAME.get_objective_frname_by_id(objective_id) + " is empty")
-			return ""
-			
-		var cp_d : String = ""
-		for progress in objective_progress:
-			var ocp : String = ""
-			for p in objective_current_progress:
-				ocp = str(objective_current_progress[p])
-			cp_d = progress + " " + ocp + "/" + objective_progress[progress]
-			op_body = op_body + cp_d + "\n"
-	
-	op_complete = op_head + op_body if ( op_head != "" and op_body != "" ) else ""
+		if objective_target_progress.size() == 1:
+			op_body = str( objective_current_progress[0] ) + "/" + str( objective_target_progress[0] )
+		else:
+			if objective_progress == {}:
+				push_error("Target objective progress with id " + str(objective_id) + " with name " + GAME.get_objective_frname_by_id(objective_id) + " is empty")
+				return ""
+				
+			var cp_d : String = ""
+			for progress in objective_progress:
+				var ocp : String = ""
+				for p in objective_current_progress:
+					ocp = str(objective_current_progress[p])
+				cp_d = progress + " " + ocp + "/" + objective_progress[progress]
+				op_body = op_body + cp_d + "\n"
+		
+		op_complete = op_head + op_body if ( op_head != "" and op_body != "" ) else ""
+		
 	return op_complete if op_complete != "" else ""
 
 func change_objective_progress(op_complete : String) -> void:
@@ -117,7 +128,7 @@ func play_progress_tween() -> void:
 		ObjectiveProgress,
 		"rect_scale",
 		ObjectiveProgress.get_scale(),
-		ObjectiveProgress.get_scale() * 1.3, 1.0,
+		Vector2(1.3, 1.3), 1.0,
 		Tween.TRANS_BACK,
 		Tween.EASE_IN_OUT
 		)
@@ -138,7 +149,7 @@ func play_progress_tween() -> void:
 		ObjectiveProgress,
 		"rect_scale",
 		ObjectiveProgress.get_scale(),
-		ObjectiveProgress.get_scale() / 1.3, 1.0,
+		Vector2(1.0, 1.0), 1.0,
 		Tween.TRANS_BACK,
 		Tween.EASE_IN_OUT
 		)
@@ -159,8 +170,9 @@ func play_progress_tween() -> void:
 
 #### SIGNAL RESPONSES ####
 
-func _on_current_progress_changed(objective, _progress) -> void:
-	display_objective(objective.get("id"))
+func _on_current_progress_changed(objective_id, _progress) -> void:
+	if objective_id != GAME.current_objective: return
+	display_objective(objective_id)
 
 func _on_objective_completed(_objective, next_objective) -> void:
 	display_objective(next_objective.get("id"))

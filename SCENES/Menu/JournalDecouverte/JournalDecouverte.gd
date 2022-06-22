@@ -99,5 +99,5 @@ func _on_journal_element_mouse_entered(journal_element) -> void:
 	if journal_element.is_journal_element_unlocked():
 		set_element_ldescr(journal_element)
 
-func _on_journal_element_mouse_exited(journal_element) -> void:
+func _on_journal_element_mouse_exited(_journal_element) -> void:
 	pass
