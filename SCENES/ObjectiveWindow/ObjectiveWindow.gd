@@ -18,7 +18,7 @@ onready var AchievementTitle : Label = Achievementpanel.get_node("WindowTitle")
 onready var AchievementDescr : Label = Achievementpanel.get_node("WindowDescr")
 
 onready var ap_ip : Vector2 = Achievementpanel.get_global_position()
-onready var ap_fp : Vector2 = Vector2(ap_ip.x, ap_ip.y + 320)
+onready var ap_fp : Vector2 = Vector2(ap_ip.x, ap_ip.y + 450)
 
 export(float) var objective_offset_x = -225.0
 
@@ -219,7 +219,7 @@ func _on_current_progress_changed(objective_id, _progress) -> void:
 
 func _on_objective_completed(objective, next_objective) -> void:
 	display_objective(next_objective.get("id"))
-	display_achievement(GAME.get_objective_frname_by_id(objective.get("id")), GAME.get_objective_fr_success_descr_by_id(objective.get("id")))
+	display_achievement(GAME.get_objective_frname_by_id(objective.get("id")), GAME.get_objective_fr_success_descr_by_id(objective.get("id")) + "\n\n" + GAME.journal_unlock_texts[1])
 
 func _on_HideButton_button_down() -> void:
 	switch_window()

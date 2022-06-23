@@ -23,7 +23,6 @@ pause_mode = 1
 position = Vector2( 704, 448 )
 smoothing_speed = 25
 min_zoom_factor = 0.1
-show_debug_icon = true
 
 [node name="BackgroundScroller" type="ParallaxBackground" parent="."]
 pause_mode = 1

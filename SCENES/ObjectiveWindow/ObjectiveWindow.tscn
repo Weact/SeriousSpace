@@ -112,9 +112,9 @@ __meta__ = {
 
 [node name="Achievements" type="Panel" parent="CanvasLayer"]
 anchor_left = 0.3475
-anchor_top = -0.328889
+anchor_top = -0.462222
 anchor_right = 0.6525
-anchor_bottom = -0.0311111
+anchor_bottom = -0.0377778
 __meta__ = {
 "_edit_group_": true,
 "_edit_use_anchors_": true
@@ -132,17 +132,15 @@ __meta__ = {
 }
 
 [node name="WindowDescr" type="Label" parent="CanvasLayer/Achievements"]
-anchor_top = 1.0
+anchor_top = 0.243455
 anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -190.0
-margin_bottom = -1.0
+anchor_bottom = 0.997382
 custom_fonts/font = SubResource( 2 )
 align = 1
-valign = 1
 autowrap = true
 __meta__ = {
-"_edit_group_": true
+"_edit_group_": true,
+"_edit_use_anchors_": true
 }
 
 [connection signal="button_down" from="CanvasLayer/Objectives/HideButton" to="." method="_on_HideButton_button_down"]
