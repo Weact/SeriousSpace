@@ -1,8 +1,9 @@
-[gd_resource type="Theme" load_steps=9 format=2]
+[gd_resource type="Theme" load_steps=12 format=2]
 
 [ext_resource path="res://THEMES/Buttons/ButtonPressed.tres" type="StyleBox" id=1]
 [ext_resource path="res://ASSETS/FontKaph/KaphItalic_Font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://ASSETS/FontKaph/KaphRegular_Font.tres" type="DynamicFont" id=3]
+[ext_resource path="res://ASSETS/Wenrexa/Elements/ArrowLeft.png" type="Texture" id=4]
 [ext_resource path="res://THEMES/Buttons/ButtonNormal.tres" type="StyleBox" id=7]
 [ext_resource path="res://THEMES/Buttons/ButtonDisabled.tres" type="StyleBox" id=8]
 [ext_resource path="res://THEMES/Buttons/ButtonHover.tres" type="StyleBox" id=9]
@@ -10,6 +11,42 @@
 [sub_resource type="StyleBoxEmpty" id=1]
 
 [sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.094769, 0, 0.363281, 0.392157 )
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 2
+border_color = Color( 1, 1, 1, 0.784314 )
+border_blend = true
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+corner_detail = 12
+expand_margin_left = 10.0
+expand_margin_right = 10.0
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.094769, 0, 0.363281, 0.392157 )
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 2
+border_color = Color( 1, 1, 1, 0.784314 )
+border_blend = true
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+corner_detail = 12
+expand_margin_left = 10.0
+expand_margin_right = 10.0
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0.094769, 0, 0.363281, 0.392157 )
 border_width_left = 4
 border_width_top = 4
@@ -96,6 +133,7 @@ OptionButton/styles/hover = null
 OptionButton/styles/normal = ExtResource( 7 )
 OptionButton/styles/pressed = null
 Panel/styles/panel = SubResource( 2 )
+PopupDialog/styles/panel = SubResource( 3 )
 TabContainer/colors/font_color_bg = Color( 0.69, 0.69, 0.69, 1 )
 TabContainer/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
 TabContainer/colors/font_color_fg = Color( 0.94, 0.94, 0.94, 1 )
@@ -190,3 +228,8 @@ Tree/styles/selected_focus = null
 Tree/styles/title_button_hover = null
 Tree/styles/title_button_normal = null
 Tree/styles/title_button_pressed = null
+WindowDialog/constants/close_h_ofs = 32
+WindowDialog/constants/close_v_ofs = -10
+WindowDialog/icons/close = ExtResource( 4 )
+WindowDialog/icons/close_highlight = ExtResource( 4 )
+WindowDialog/styles/panel = SubResource( 4 )

@@ -123,7 +123,6 @@ __meta__ = {
 [node name="WindowTitle" type="Label" parent="CanvasLayer/Achievements"]
 anchor_right = 1.0
 margin_bottom = 59.0
-text = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa"
 align = 1
 valign = 1
 autowrap = true
@@ -139,7 +138,6 @@ anchor_bottom = 1.0
 margin_top = -190.0
 margin_bottom = -1.0
 custom_fonts/font = SubResource( 2 )
-text = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
 align = 1
 valign = 1
 autowrap = true

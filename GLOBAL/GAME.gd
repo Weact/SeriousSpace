@@ -309,6 +309,8 @@ const OBJECTIVES = {
 
 var objects_container_nodes : Array = []
 
+signal unlock_gc
+
 #### ACCESSORS ####
 
 ## CAMERA ENABLED
@@ -727,6 +729,7 @@ func _on_current_progress_changed(objective, progress) -> void:
 		finish_objective_by_id(objective)
 
 func _on_objective_completed(objective, next_objective) -> void:
-	if objective.get("id") == 7:
-		unlock_element_by_id(7)
+	if objective.get("id") == 7 or next_objective.get("id") > 7:
+		unlock_element_by_id(6)
+		emit_signal("unlock_gc")
 	update_current_objective(next_objective.get("id"))
