@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/BEEPTimer_Anticipation Beeps_05.wav-5b3cc7ebe218114f0b442df973330dfc.sample"
+
+[deps]
+
+source_file="res://ASSETS/ShapeformsAudio/Sci Fi Weapons Cyberpunk Arsenal Preview/AUDIO/BEEPTimer_Anticipation Beeps_05.wav"
+dest_files=[ "res://.import/BEEPTimer_Anticipation Beeps_05.wav-5b3cc7ebe218114f0b442df973330dfc.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

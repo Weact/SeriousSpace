@@ -1,0 +1,194 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "SpaceElement",
+"class": "BlackHole",
+"language": "GDScript",
+"path": "res://SCENES/Elements/BlackHole/BlackHole.gd"
+}, {
+"base": "SpaceElement",
+"class": "CosmicDust",
+"language": "GDScript",
+"path": "res://SCENES/Elements/CosmicDust/CosmicDust.gd"
+}, {
+"base": "SpaceElement",
+"class": "DarkMatter",
+"language": "GDScript",
+"path": "res://SCENES/Elements/DarkMatter/DarkMatter.gd"
+}, {
+"base": "TextureButton",
+"class": "ElementButton",
+"language": "GDScript",
+"path": "res://SCENES/HUD/ElementButton/ElementButton.gd"
+}, {
+"base": "TextureRect",
+"class": "ElementPlaceholder",
+"language": "GDScript",
+"path": "res://SCENES/HUD/ElementButton/Placeholder/ElementPlaceholder.gd"
+}, {
+"base": "SpaceElement",
+"class": "Galaxy",
+"language": "GDScript",
+"path": "res://SCENES/Elements/Galaxy/Galaxy.gd"
+}, {
+"base": "Control",
+"class": "HUD",
+"language": "GDScript",
+"path": "res://SCENES/HUD/HUD.gd"
+}, {
+"base": "Control",
+"class": "JournalDecouverte",
+"language": "GDScript",
+"path": "res://SCENES/Menu/JournalDecouverte/JournalDecouverte.gd"
+}, {
+"base": "ElementPlaceholder",
+"class": "JournalElement",
+"language": "GDScript",
+"path": "res://SCENES/Menu/JournalDecouverte/JournalElement/JournalElement.gd"
+}, {
+"base": "Node2D",
+"class": "Level",
+"language": "GDScript",
+"path": "res://SCENES/Level/Level.gd"
+}, {
+"base": "SpaceElement",
+"class": "Meteroid",
+"language": "GDScript",
+"path": "res://SCENES/Elements/Meteroid/Meteroid.gd"
+}, {
+"base": "Control",
+"class": "ObjectiveWindow",
+"language": "GDScript",
+"path": "res://SCENES/ObjectiveWindow/ObjectiveWindow.gd"
+}, {
+"base": "CanvasLayer",
+"class": "PauseScene",
+"language": "GDScript",
+"path": "res://SCENES/PauseScreen/PauseScene.gd"
+}, {
+"base": "Position2D",
+"class": "PinchPanCamera",
+"language": "GDScript",
+"path": "res://addons/ppc/ppcamera.gd"
+}, {
+"base": "SpaceElement",
+"class": "Planet",
+"language": "GDScript",
+"path": "res://SCENES/Elements/Planet/Planet.gd"
+}, {
+"base": "RigidBody2D",
+"class": "SpaceElement",
+"language": "GDScript",
+"path": "res://SCENES/Elements/SpaceElement.gd"
+}, {
+"base": "SpaceElement",
+"class": "Star",
+"language": "GDScript",
+"path": "res://SCENES/Elements/Star/Star.gd"
+}, {
+"base": "Control",
+"class": "TitleScreen",
+"language": "GDScript",
+"path": "res://SCENES/Menu/TitleScreen/TitleScreen.gd"
+} ]
+_global_script_class_icons={
+"BlackHole": "",
+"CosmicDust": "",
+"DarkMatter": "",
+"ElementButton": "",
+"ElementPlaceholder": "",
+"Galaxy": "",
+"HUD": "",
+"JournalDecouverte": "",
+"JournalElement": "",
+"Level": "",
+"Meteroid": "",
+"ObjectiveWindow": "",
+"PauseScene": "",
+"PinchPanCamera": "res://addons/ppc/icon.png",
+"Planet": "",
+"SpaceElement": "",
+"Star": "",
+"TitleScreen": ""
+}
+
+[application]
+
+config/name="GdExam"
+run/main_scene="res://SCENES/Menu/TitleScreen/TitleScreen.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+GAME="*res://GLOBAL/GAME.gd"
+MergeHandler="*res://GLOBAL/MergeHandler/MergeHandler.tscn"
+
+[display]
+
+window/size/width=1600
+window/size/height=900
+mouse_cursor/custom_image="res://ASSETS/CURSOR/arrow-diagonal/White_Arrow.png"
+window/stretch/mode="2d"
+window/stretch/aspect="keep_width"
+
+[gui]
+
+theme/custom="res://THEMES/MainTheme.tres"
+theme/custom_font="res://ASSETS/FontKaph/KaphRegular_Font.tres"
+
+[importer_defaults]
+
+texture={
+"compress/bptc_ldr": 0,
+"compress/hdr_mode": 0,
+"compress/lossy_quality": 0.7,
+"compress/mode": 0,
+"compress/normal_map": 0,
+"detect_3d": false,
+"flags/anisotropic": false,
+"flags/filter": false,
+"flags/mipmaps": false,
+"flags/repeat": 0,
+"flags/srgb": 2,
+"process/HDR_as_SRGB": false,
+"process/fix_alpha_border": true,
+"process/invert_color": false,
+"process/normal_map_invert_y": false,
+"process/premult_alpha": false,
+"size_limit": 0,
+"stream": false,
+"svg/scale": 1.0
+}
+
+[input]
+
+click={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+menu={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":16777217,"unicode":0,"echo":false,"script":null)
+ ]
+}
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
+[physics]
+
+common/enable_pause_aware_picking=true
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"

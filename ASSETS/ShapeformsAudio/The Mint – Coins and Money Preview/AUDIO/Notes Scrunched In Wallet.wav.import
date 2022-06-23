@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Notes Scrunched In Wallet.wav-d5a08aa51ef39c7609f20fc12da5bf27.sample"
+
+[deps]
+
+source_file="res://ASSETS/ShapeformsAudio/The Mint – Coins and Money Preview/AUDIO/Notes Scrunched In Wallet.wav"
+dest_files=[ "res://.import/Notes Scrunched In Wallet.wav-d5a08aa51ef39c7609f20fc12da5bf27.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/BUTTON_05.wav-d211e14411c5b1831cc8da3afeb5bf8e.sample"
+
+[deps]
+
+source_file="res://ASSETS/ShapeformsAudio/Cassette Preview/AUDIO/BUTTON_05.wav"
+dest_files=[ "res://.import/BUTTON_05.wav-d211e14411c5b1831cc8da3afeb5bf8e.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
