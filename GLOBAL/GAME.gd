@@ -11,7 +11,7 @@ signal element_unlocked(element)
 var CAMERA_ENABLED : bool = true
 var CURSOR_IN_SELECT : bool = false
 
-const DEBUG : bool = true
+const DEBUG : bool = false
 
 const DISABLED_ELEMENT_COLOR : Color = Color(0.3, 0.3, 0.3, 1.0)
 const ENABLED_ELEMENT_COLOR : Color = Color(1.0, 1.0, 1.0, 1.0)
@@ -548,8 +548,9 @@ func set_objective_current_progress_by_id(id: int, v) -> void:
 				return
 	else:
 		GALAXY_CURRENT_PROGRESS = v
-		print(GALAXY_CURRENT_PROGRESS)
-		print(GALAXY_TARGET_PROGRESS)
+		if DEBUG:
+			print(GALAXY_CURRENT_PROGRESS)
+			print(GALAXY_TARGET_PROGRESS)
 		emit_signal("current_progress_changed", id, GALAXY_CURRENT_PROGRESS)
 
 # GET OBJECTIVE TARGET PROGRESS

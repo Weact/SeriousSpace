@@ -25,7 +25,7 @@ func _ready() -> void:
 	
 	get_tree().set_pause(true)
 	GAME.set_game_paused(true)
-	print("Paused the game")
+	if GAME.DEBUG: print("Paused the game")
 
 func _input(event: InputEvent) -> void:
 	if not event is InputEventKey:
@@ -56,4 +56,4 @@ func _on_quitter() -> void:
 func _on_PauseScene_tree_exiting() -> void:
 	get_tree().set_pause(false)
 	GAME.set_game_paused(false)
-	print("Unpaused the game")
+	if GAME.DEBUG: print("Unpaused the game")

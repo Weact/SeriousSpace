@@ -108,7 +108,7 @@ func _on_element_unlocked(element) -> void:
 	var etui = element.get("id")
 	var etun = GAME.get_element_name_by_id(etui)
 	
-	print("Element N°" + str(etui) + " will be unlocked. Element details : [id] " + str(etui) + " | [name] " + etun + "...")
+	if GAME.DEBUG: print("Element N°" + str(etui) + " will be unlocked. Element details : [id] " + str(etui) + " | [name] " + etun + "...")
 	
 	var element_to_unlock_index : int = GAME.unlocked[ etui ]
 	var should_unlock_element : bool = GAME.unlocked[element_to_unlock_index]

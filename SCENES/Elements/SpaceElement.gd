@@ -152,8 +152,9 @@ func _ready() -> void:
 	__ = connect("selected_changed", self, "_on_selected_changed")
 	__ = area.connect("area_entered", self, "_on_area_entered")
 	__ = area.connect("area_exited", self, "_on_area_exited")
-
-	print("ELEMENT " + get_name() + " HAS SPRITE : " + str(get_child(0) is Sprite) + "; HAS ANIM SPRITE : " + str( get_child(0) is AnimatedSprite ) )
+	
+	if GAME.DEBUG:
+		print("ELEMENT " + get_name() + " HAS SPRITE : " + str(get_child(0) is Sprite) + "; HAS ANIM SPRITE : " + str( get_child(0) is AnimatedSprite ) )
 	emit_signal("element_spawned", self)
 
 func _physics_process(delta: float) -> void:
